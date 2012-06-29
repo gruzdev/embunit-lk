@@ -1,9 +1,11 @@
 ifneq ($(KERNELRELEASE),)
 EMBUNIT_DIR := embunit
 EMBUNIT_SRC := $(EMBUNIT_DIR)/embUnit
+EMBUNIT_SAMPLES := $(EMBUNIT_DIR)/samples
 
-EXTRA_CFLAGS += -I$(src)/$(EMBUNIT_DIR)
-EXTRA_CFLAGS += -DNO_STDIO_PRINTF
+ccflags-y += -I$(src)/$(EMBUNIT_DIR)
+ccflags-y += -I$(src)/wrap
+ccflags-y += -DNO_STDIO_PRINTF
 
 obj-m += test.o
 
@@ -11,12 +13,12 @@ obj-m += test.o
 test-y := test_runner.o
 
 #counter module
-test-y += counter.o
-test-y += counterTest.o
+test-y += $(EMBUNIT_SAMPLES)/counter.o
+test-y += $(EMBUNIT_SAMPLES)/counterTest.o
 
 #person module
-test-y += person.o
-test-y += personTest.o
+test-y += $(EMBUNIT_SAMPLES)/person.o
+test-y += $(EMBUNIT_SAMPLES)/personTest.o
 
 #embunit
 test-y += $(EMBUNIT_SRC)/AssertImpl.o
